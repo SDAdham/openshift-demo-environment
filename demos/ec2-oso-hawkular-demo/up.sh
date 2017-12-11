@@ -21,7 +21,7 @@ sudo apt-get install -y socat unzip
 echo "deb https://apt.dockerproject.org/repo ubuntu-xenial main" | sudo tee /etc/apt/sources.list.d/docker.list
 sudo apt-get update
 #sudo apt-get install -y linux-image-extra-$(uname -r) linux-image-extra-virtual
-sudo apt-get install -y docker-engine=1.12.3-0~xenial
+sudo apt-get install -y docker-engine=1.12.3-0~xenial --allow-downgrades
 sudo service docker start
 
 # Install docker: prepare for OpenShift
@@ -43,8 +43,8 @@ sudo chown root:root oc
 sudo mv oc /usr/bin
 
 # Run OpenShift
-export OS_PUBLIC_IP=$(wget -q -O- http://instance-data/latest/meta-data/public-ipv4)
-export OS_PUBLIC_HOSTNAME=$(wget -q -O- http://instance-data/latest/meta-data/public-hostname)
+#export OS_PUBLIC_IP=$(wget -q -O- http://instance-data/latest/meta-data/public-ipv4)
+#export OS_PUBLIC_HOSTNAME=$(wget -q -O- http://instance-data/latest/meta-data/public-hostname)
 
 oc cluster up --public-hostname="${OS_PUBLIC_HOSTNAME}" --routing-suffix="${OS_PUBLIC_IP}.nip.io" --logging --metrics
 sudo cp /var/lib/origin/openshift.local.config/master/admin.kubeconfig ~/.kube/config
